@@ -4,7 +4,7 @@ import noteContext from "../context/notes/noteContext";
 function AddNote() {
     const context = useContext(noteContext);
     const {addNote} = context;
-    const [note, setNote] = useState({title:"", description:"", tag:"default"})
+    const [note, setNote] = useState({title:"", description:"", tag:""})
     const handleSubmit = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description,note.tag);
@@ -42,17 +42,19 @@ function AddNote() {
               onChange={handleOnChange}
             />
           </div>
-          <div className="mb-3 form-check">
+          <div className="mb-3">
+            <label htmlFor="tag" className="form-label">
+              Tag
+            </label>
             <input
-              type="checkbox"
-              className="form-check-input"
-              id="exampleCheck1"
+              type="text"
+              className="form-control"
+              id="tag"
+              name="tag"
               onChange={handleOnChange}
             />
-            <label className="form-check-label" htmlFor="exampleCheck1">
-              Check me out
-            </label>
           </div>
+          
           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
            Add Note
           </button>

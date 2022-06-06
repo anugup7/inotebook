@@ -37,7 +37,7 @@ router.post(
           title, description, tag,user: req.user.id
       })
       const savedNotes = await note.save()
-      res.json(savedNotes);
+      res.json({"Success":"Note has been added",savedNotes});
       }
       catch (error) {
         console.log(error.message);
@@ -83,7 +83,7 @@ router.delete("/deletenote/:id",fetchuser, async(req,res)=>{
       return res.status(401).send("Not Allowed")
     }
     note = await Note.findByIdAndDelete(req.params.id)
-    res.json({"Success":"Note has been deleted", note:note});
+    res.json({"Success":"Note has been deleted", note});
   }catch(error){
     console.log(error.message);
     res.status(500).send("Internal Server Error");
