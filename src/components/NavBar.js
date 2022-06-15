@@ -6,9 +6,9 @@ import {
 function NavBar() {
     let location = useLocation();
   return (
-    <nav className="navbar navbar-expand-lg bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <div className="container-fluid">
-    <Link className="navbar-brand" to="#">Navbar</Link>
+    <Link className="navbar-brand light" to="#">iNoteBook</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -22,8 +22,8 @@ function NavBar() {
         </li>
       </ul>
       <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
+      <Link className="btn btn-outline-primary mx-1" to="/login" role="button">Login</Link>
+      <Link className="btn btn-outline-danger mx-1" to="/signup" role="button">SignUp</Link>
       </form>
     </div>
   </div>

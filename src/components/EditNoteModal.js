@@ -1,7 +1,7 @@
 import React from "react";
 
 function EditNoteModal(props) {
-  const { buttonRef, note, handleOnChange,closeRef, handleClick } = props;
+  const { buttonRef, note, handleOnChange, closeRef, handleClick } = props;
   return (
     <>
       <button
@@ -47,6 +47,8 @@ function EditNoteModal(props) {
                     value={note.edittitle}
                     aria-describedby="emailHelp"
                     onChange={handleOnChange}
+                    minLength={3}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -60,6 +62,8 @@ function EditNoteModal(props) {
                     name="editdescription"
                     value={note.editdescription}
                     onChange={handleOnChange}
+                    minLength={5}
+                    required
                   />
                 </div>
                 <div className="mb-3">

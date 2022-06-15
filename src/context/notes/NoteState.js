@@ -7,18 +7,18 @@ const NoteState = (props) => {
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   //Get all notes
-  const getNote = async() => {
-    const response = await fetch(`${host}/api/note/fetchallnotes`,{
-      method: "GET",
+  const getNote = () => {
+    let config = {
       headers: {
         "Content-Type": "application/json",
         "auth-token":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI5OTFiYmQ1YmI3NjkwZGU2MmFmZjA5In0sImlhdCI6MTY1NDIwMTI3N30.kmZDvYawQhzmTPWgAy4vTHveVVEaPbztFDZAC3VB2uU",
-      }
-    })
-    const json = await response.json();
-    console.log(json);
-    setNotes(json)
+      },
+    };
+    const url = `${host}/api/note/fetchallnotes`;
+    axios.get(url, config).then((res) => {
+      setNotes(res.data);
+    });
   };
   //Add a note
   const addNote = async (title, description, tag) => {
@@ -33,17 +33,7 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
     });
     const json = await response.json();
-    console.log(json);
-    console.log("Adding a new note");
-    const note = {
-      _id: "62992179987e04b1bb959415",
-      user: "62991bbd5bb7690de62aff09",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2022-06-02T20:45:45.112Z",
-      __v: 0,
-    };
+    const note = json.savedNotes
     setNotes(notes.concat(note));
   };
   //Delete a note
@@ -69,26 +59,31 @@ const NoteState = (props) => {
   //Edit a note
   const editNote = async(id, title, description, tag) => {
     //API Call
-   const response = await fetch(`${host}/api/note/updatenote/${id}`,{
-     method: 'PUT',
-     headers:{
-      "Content-Type": "application/json",
-      "auth-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI5OTFiYmQ1YmI3NjkwZGU2MmFmZjA5In0sImlhdCI6MTY1NDIwMTI3N30.kmZDvYawQhzmTPWgAy4vTHveVVEaPbztFDZAC3VB2uU",
-     },
-     body: JSON.stringify({title,description, tag})
-   });
-   const json = response.json();
-   console.log(json);
+    const response = await fetch(`${host}/api/note/updatenote/${id}`,{
+      method: 'PUT',
+      headers:{
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI5OTFiYmQ1YmI3NjkwZGU2MmFmZjA5In0sImlhdCI6MTY1NDIwMTI3N30.kmZDvYawQhzmTPWgAy4vTHveVVEaPbztFDZAC3VB2uU"
+      },
+      body: JSON.stringify({title, description, tag})
+    });
+    const json = await response.json();
+    console.log(json)
     //logic to edit in client
-    console.log("Edit note called")
-    for (let element in notes) {
+    let newNotes = JSON.parse(JSON.stringify(notes))
+    for (let i in newNotes) {
+      const element = newNotes[i]
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[i].title = title;
+        newNotes[i].description = description;
+        newNotes[i].tag = tag;
+        break;
       }
     }
+    console.log(notes)
+    console.log(newNotes)
+    setNotes(newNotes)
   };
   return (
     <NoteContext.Provider

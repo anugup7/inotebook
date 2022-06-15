@@ -33,6 +33,9 @@ function Notes() {
       <EditNoteModal buttonRef={buttonRef} closeRef={closeRef} note={note} handleOnChange={handleOnChange} handleUpdate={handleUpdate} handleClick = {handleClick}/>
       <div className="row my-3">
         <h1>Your Notes</h1>
+        <div className="container">
+          {notes.length === 0 && "No notes to display"}
+        </div>
         {notes.map((note) => {
           return (
             <NoteItem key={note._id} handleUpdate={handleUpdate} note={note} />

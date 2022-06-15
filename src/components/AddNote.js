@@ -8,6 +8,7 @@ function AddNote() {
     const handleSubmit = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description,note.tag);
+        setNote({title:"", description:"", tag:""})
     }
     const handleOnChange = (e) =>{
         setNote({...note,[e.target.name]:e.target.value})
@@ -16,7 +17,7 @@ function AddNote() {
     <>
       <div className="container my-3">
         <h2>Add Notes</h2>
-        <form className="my-3">
+        <form onSubmit={handleSubmit} className="my-3">
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Title
@@ -28,6 +29,9 @@ function AddNote() {
               name="title"
               aria-describedby="emailHelp"
               onChange={handleOnChange}
+              minLength={3}
+              value={note.title}
+              required
             />
           </div>
           <div className="mb-3">
@@ -40,6 +44,9 @@ function AddNote() {
               id="description"
               name="description"
               onChange={handleOnChange}
+              minLength={5}
+              value={note.description}
+              required
             />
           </div>
           <div className="mb-3">
@@ -51,11 +58,11 @@ function AddNote() {
               className="form-control"
               id="tag"
               name="tag"
+              value={note.tag}
               onChange={handleOnChange}
             />
           </div>
-          
-          <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+          <button type="submit" className="btn btn-primary">
            Add Note
           </button>
         </form>
